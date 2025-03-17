@@ -4,6 +4,7 @@ package com.gows.sdp.client.data.source
 import android.app.Activity
 import android.util.Log
 import com.google.firebase.FirebaseException
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -24,12 +25,12 @@ class FirebaseRemoteAuthDataSource {
     private var verificationId: String? = null
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
 
-    suspend fun signInWithEmail(email: String, pass: String): Boolean {
+    suspend fun signInWithEmail(email: String, pass: String): AuthResult? {
         return try {
-            auth.signInWithEmailAndPassword(email, pass).await()
-            true
+            return auth.signInWithEmailAndPassword(email, pass).await()
         } catch (e: Exception) {
-            false
+            e.printStackTrace()
+            return null
         }
     }
 

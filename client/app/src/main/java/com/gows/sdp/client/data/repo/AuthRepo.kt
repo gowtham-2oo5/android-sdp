@@ -1,11 +1,13 @@
 package com.gows.sdp.client.data.repo
 
 import android.app.Activity
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.gows.sdp.client.data.source.FirebaseRemoteAuthDataSource
 
 class AuthRepo(private val remoteAuthDataSource: FirebaseRemoteAuthDataSource) {
-    suspend fun signInWithEmail(email: String, pass: String): Boolean {
+    suspend fun signInWithEmail(email: String, pass: String): AuthResult? {
         return remoteAuthDataSource.signInWithEmail(email, pass)
     }
 

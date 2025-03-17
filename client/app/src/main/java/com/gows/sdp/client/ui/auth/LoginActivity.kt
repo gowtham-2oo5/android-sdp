@@ -18,7 +18,7 @@ import com.gows.sdp.client.auth.PhoneLoginUseCase
 import com.gows.sdp.client.data.repo.AuthRepo
 import com.gows.sdp.client.data.source.FirebaseRemoteAuthDataSource
 import com.gows.sdp.client.databinding.ActivityLoginBinding
-import com.gows.sdp.client.ui.login.EmailPasswordLoginFragment
+import com.gows.sdp.client.ui.auth.EmailPasswordLoginFragment
 import com.gows.sdp.client.ui.view_model.LoginViewModel
 import com.gows.sdp.client.ui.view_model.LoginViewModelFactory
 import com.google.android.gms.auth.api.identity.BeginSignInRequest

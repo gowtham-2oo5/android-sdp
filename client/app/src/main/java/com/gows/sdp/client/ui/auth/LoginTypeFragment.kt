@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gows.sdp.client.R
 import com.gows.sdp.client.databinding.FragmentLoginTypeBinding
-import com.gows.sdp.client.ui.login.EmailPasswordLoginFragment
+import com.gows.sdp.client.ui.auth.EmailPasswordLoginFragment
 
 class LoginTypeFragment : Fragment() {
     private var _binding: FragmentLoginTypeBinding? = null
