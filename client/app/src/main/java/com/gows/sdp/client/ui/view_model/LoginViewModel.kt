@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.gows.sdp.client.auth.GoogleLoginUseCase
 import com.gows.sdp.client.auth.LoginWithEmailUseCase
@@ -26,14 +25,12 @@ class LoginViewModel(
     val authState: LiveData<String> get() = _authState
 
     /** Email/Password Authentication */
-
     fun signInWithEmail(email: String, pass: String) {
         viewModelScope.launch {
             try {
                 val authResult = loginWithEmailUseCase.invoke(email, pass)
                 val user = authResult?.user
 
-                Log.d("LoginViewModel", "User: ${user.toString()}")
                 if (user != null) {
                     _loginResult.postValue(Result.success(user))
                 } else {
@@ -44,7 +41,6 @@ class LoginViewModel(
             }
         }
     }
-
 
     /** Phone Authentication */
     fun sendCode(phone: String, activity: Activity) {
@@ -61,7 +57,8 @@ class LoginViewModel(
 
     /** Google Authentication */
     fun signInWithGoogle(idToken: String) {
-        googleLoginUseCase.executeGoogleLogin(idToken) { result ->
+        viewModelScope.launch {
+            val result = googleLoginUseCase.executeGoogleLogin(idToken)
             _loginResult.postValue(result)
         }
     }

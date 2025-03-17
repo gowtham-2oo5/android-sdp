@@ -39,44 +39,43 @@ android {
         viewBinding = true
     }
 }
-
 dependencies {
 
+    // Core AndroidX dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Firebase BOM (Automatically manages versions for Firebase dependencies)
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
 
-    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+    // Google Sign-In
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
+    implementation ("com.firebaseui:firebase-ui-auth:8.0.2")
+
+
+    // AndroidX Credentials API (Passwordless sign-in)
     implementation("androidx.credentials:credentials:1.2.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.0.1")
 
-    // Firebase Authentication (if you need it to manage users in Firebase)
-    implementation("com.google.firebase:firebase-auth-ktx")
+    // Android Jetpack Lifecycle & Fragment support
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.fragment:fragment-ktx:1.5.4")
 
-    implementation("com.google.firebase:firebase-firestore-ktx") // For Kotlin
-
-
-
-// Google Sign-In (for Google authentication)
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
-
-    // https://mvnrepository.com/artifact/com.google.android.material/material
-    runtimeOnly("com.google.android.material:material:1.12.0")
-
-    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-android-extensions-runtime
-    runtimeOnly("org.jetbrains.kotlin:kotlin-android-extensions-runtime:2.1.10")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2") // or a newer version
-    implementation("androidx.fragment:fragment-ktx:1.5.4") // Or higher, if available
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2") // or a newer version if available
-
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
 }

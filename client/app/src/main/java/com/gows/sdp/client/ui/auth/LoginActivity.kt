@@ -2,6 +2,7 @@ package com.gows.sdp.client.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,15 +41,22 @@ class LoginActivity : AppCompatActivity() {
 
     private val googleSignInLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            Log.d("GoogleSignIn", "Sign-in result received: resultCode=${result.resultCode}")
             if (result.resultCode == RESULT_OK) {
                 val credential =
                     Identity.getSignInClient(this).getSignInCredentialFromIntent(result.data)
                 val idToken = credential.googleIdToken
+                Log.d("GoogleSignIn", "Credential received: ${credential.id}")
+                Log.d("GoogleSignIn", "idToken: $idToken")
+
                 if (idToken != null) {
                     viewModel.signInWithGoogle(idToken)
                 } else {
+                    Log.e("GoogleSignIn", "Google Sign-In failed: idToken is null")
                     Toast.makeText(this, "Google Sign-In Failed", Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                Log.e("GoogleSignIn", "Google Sign-In failed: resultCode=${result.resultCode}")
             }
         }
 
@@ -85,13 +93,20 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.googleSignInButton.setOnClickListener {
+
+            val clientId = getString(R.string.default_web_client_id)
+            Log.d("GoogleSignIn", "Using Client ID: $clientId")
+
+            Log.d("GoogleSignIn", "Google Sign-In button clicked")
             oneTapClient.beginSignIn(signInRequest)
                 .addOnSuccessListener { result ->
+                    Log.d("GoogleSignIn", "Begin sign-in successful")
                     googleSignInLauncher.launch(
                         IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
                     )
                 }
                 .addOnFailureListener {
+                    Log.e("GoogleSignIn", "Google Sign-In failed: ${it.message}", it)
                     Toast.makeText(this, "Google Sign-In Failed: ${it.message}", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -102,6 +117,7 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.loginResult.observe(this@LoginActivity) { result ->
                     result.fold(
                         onSuccess = {
+                            Log.d("GoogleSignIn", "Login Successful: $it")
                             Toast.makeText(
                                 this@LoginActivity,
                                 "Login Successful",
@@ -110,6 +126,7 @@ class LoginActivity : AppCompatActivity() {
                             // Navigate to next screen
                         },
                         onFailure = {
+                            Log.e("GoogleSignIn", "Login Failed: ${it.message}", it)
                             Toast.makeText(
                                 this@LoginActivity,
                                 "Login Failed: ${it.message}",
@@ -120,6 +137,5 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 }
