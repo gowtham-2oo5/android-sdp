@@ -1,0 +1,53 @@
+package com.gows.sdp.client.ui.auth
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.gows.sdp.client.auth.RegisterUseCase
+import com.gows.sdp.client.data.repo.AuthRepo
+import com.gows.sdp.client.data.source.FirebaseRemoteAuthDataSource
+import com.gows.sdp.client.databinding.ActivityRegisterBinding
+import com.gows.sdp.client.ui.view_model.RegisterViewModelFactory
+import com.gows.sdp.client.ui.view_model.RegisterViewModel
+import kotlinx.coroutines.launch
+
+class RegisterActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRegisterBinding
+    private val viewModel: com.gows.sdp.client.ui.view_model.RegisterViewModel by viewModels {
+        RegisterViewModelFactory(
+            com.gows.sdp.client.auth.RegisterUseCase(
+                com.gows.sdp.client.data.repo.AuthRepo(
+                    FirebaseRemoteAuthDataSource()
+                )
+            )
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.buttonCreateAccount.setOnClickListener {
+            val email = binding.editTextEmail.text.toString()
+            val password = binding.editTextPassword.text.toString()
+            viewModel.createAccountWithEmail(email, password)
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.createAccountResult.collect { result ->
+                    if (result) {
+                        Toast.makeText(this@RegisterActivity, "Create account Successful", Toast.LENGTH_SHORT).show()
+                        // Navigate to next screen here
+                    } else {
+                        Toast.makeText(this@RegisterActivity, "Create account Failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+}

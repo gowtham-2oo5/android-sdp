@@ -1,4 +1,4 @@
-package com.sdp.client_app
+package com.sdp.client
 
 import org.junit.Test
 
