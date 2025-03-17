@@ -9,4 +9,6 @@
         <string name="credentials_error">Credentials error</string>
         <string name="network_error">Network error</string>
 
+    <string name="default_web_client_id">515200312196-5nn0clgr6p3m9cpri7s8640h3oh143e1.apps.googleusercontent.com</string>
+
 </resources>

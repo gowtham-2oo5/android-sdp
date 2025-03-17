@@ -1,16 +1,10 @@
 package com.gows.sdp.client.data.source
 
-
 import android.app.Activity
 import android.util.Log
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -21,16 +15,15 @@ class FirebaseRemoteAuthDataSource {
     private val auth: FirebaseAuth = Firebase.auth
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-
     private var verificationId: String? = null
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
 
     suspend fun signInWithEmail(email: String, pass: String): AuthResult? {
         return try {
-            return auth.signInWithEmailAndPassword(email, pass).await()
+            auth.signInWithEmailAndPassword(email, pass).await()
         } catch (e: Exception) {
             e.printStackTrace()
-            return null
+            null
         }
     }
 
@@ -74,7 +67,6 @@ class FirebaseRemoteAuthDataSource {
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-
     fun verifyCode(code: String, callback: (Boolean, String?) -> Unit) {
         val credential = verificationId?.let { PhoneAuthProvider.getCredential(it, code) }
         if (credential != null) {
@@ -99,24 +91,15 @@ class FirebaseRemoteAuthDataSource {
             "gender" to gender
         )
 
-        FirebaseFirestore.getInstance().collection("users")
+        firestore.collection("users")
             .document(uid)
             .set(user)
             .addOnSuccessListener { Log.d("Firestore", "User saved successfully") }
             .addOnFailureListener { Log.e("Firestore", "Error saving user: ${it.message}") }
     }
 
-    fun signInWithGoogle(idToken: String, onResult: (Result<FirebaseUser>) -> Unit) {
+    fun signInWithGoogle(idToken: String): Task<AuthResult> {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onResult(Result.success(auth.currentUser!!))
-                } else {
-                    onResult(Result.failure(task.exception ?: Exception("Google Sign-In failed")))
-                }
-            }
+        return auth.signInWithCredential(credential)
     }
-
-
 }
