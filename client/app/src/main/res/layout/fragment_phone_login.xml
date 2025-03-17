@@ -1,47 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="20dp"
+        android:background="@color/darkGreen">
 
-    <EditText
-            android:id="@+id/editTextPhoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Phone Number"
-            android:inputType="phone"
-            android:layout_marginBottom="8dp" />
-
-    <Button
-            android:id="@+id/buttonSendOtp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Send OTP"
-            android:backgroundTint="@color/primaryGreen" />
-
+    <!-- Container for Phone Login -->
     <LinearLayout
-            android:id="@+id/otpContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="@drawable/rounded_container"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_marginTop="16dp">
+            android:gravity="center">
 
+        <!-- Title Label -->
+        <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone Login"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+        <!-- Phone Number Input -->
         <EditText
-                android:id="@+id/editTextOtp"
+                android:id="@+id/editTextPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter OTP"
-                android:inputType="number" />
+                android:hint="Enter Phone Number"
+                android:inputType="phone"
+                android:background="@drawable/rounded_edittext"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lightGray"
+                android:layout_marginBottom="12dp" />
 
+        <!-- Send OTP Button -->
         <Button
-                android:id="@+id/buttonVerifyOtp"
+                android:id="@+id/buttonSendOtp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Verify OTP"
-                android:backgroundTint="@color/primaryGreen"
+                android:text="Send OTP"
+                android:textSize="18sp"
+                android:background="@drawable/rounded_button"
+                android:textColor="@color/white"
+                android:padding="14dp"
                 android:layout_marginTop="8dp" />
+
+        <!-- OTP Section (Initially Hidden) -->
+        <LinearLayout
+                android:id="@+id/otpContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="16dp">
+
+            <!-- OTP Input -->
+            <EditText
+                    android:id="@+id/editTextOtp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter OTP"
+                    android:inputType="number"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="12dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lightGray"
+                    android:layout_marginBottom="12dp" />
+
+            <!-- Verify OTP Button -->
+            <Button
+                    android:id="@+id/buttonVerifyOtp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Verify OTP"
+                    android:textSize="18sp"
+                    android:background="@drawable/rounded_button"
+                    android:textColor="@color/white"
+                    android:padding="14dp"
+                    android:layout_marginTop="8dp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.gows.sdp.client.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -17,12 +18,10 @@ import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
-    private val viewModel: com.gows.sdp.client.ui.view_model.RegisterViewModel by viewModels {
+    private val viewModel: RegisterViewModel by viewModels {
         RegisterViewModelFactory(
-            com.gows.sdp.client.auth.RegisterUseCase(
-                com.gows.sdp.client.data.repo.AuthRepo(
-                    FirebaseRemoteAuthDataSource()
-                )
+            RegisterUseCase(
+                AuthRepo(FirebaseRemoteAuthDataSource())
             )
         )
     }
@@ -37,17 +36,28 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.editTextPassword.text.toString()
             viewModel.createAccountWithEmail(email, password)
         }
+
+        binding.buttonBackToLogin.setOnClickListener {
+            navigateToLogin()
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.createAccountResult.collect { result ->
                     if (result) {
                         Toast.makeText(this@RegisterActivity, "Create account Successful", Toast.LENGTH_SHORT).show()
-                        // Navigate to next screen here
+                        navigateToLogin()
                     } else {
                         Toast.makeText(this@RegisterActivity, "Create account Failed", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

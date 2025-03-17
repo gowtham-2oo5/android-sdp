@@ -107,7 +107,6 @@ class LoginActivity : AppCompatActivity() {
                                 "Login Successful",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            // Navigate to next screen
                         },
                         onFailure = {
                             Toast.makeText(

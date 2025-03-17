@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.gows.sdp.client.databinding.FragmentOnboardingEnjoyBinding
 import com.gows.sdp.client.ui.auth.LoginActivity
 
@@ -24,9 +25,13 @@ class OnboardingEnjoyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val viewPager = requireActivity().findViewById<ViewPager2>(com.gows.sdp.client.R.id.viewPager)
         binding.buttonStartOrdering.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
+        }
+        binding.buttonPrev.setOnClickListener {
+            viewPager.currentItem = 2
         }
     }
 

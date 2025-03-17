@@ -24,12 +24,15 @@ class OnboardingHowItWorksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewPager = requireActivity().findViewById<ViewPager2>(com.gows.sdp.client.R.id.viewPager)
-        binding.buttonBrowseMenu.setOnClickListener {
+        binding.buttonNext.setOnClickListener {
             viewPager.currentItem = 2
         }
-        binding.buttonScanQrCode.setOnClickListener {
-            viewPager.currentItem = 2
+        binding.buttonPrev.setOnClickListener {
+            viewPager.currentItem = 1
         }
+//        binding.buttonScanQrCode.setOnClickListener {
+//            viewPager.currentItem = 2
+//        }
     }
 
     override fun onDestroyView() {

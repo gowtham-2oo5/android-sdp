@@ -1,63 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white">
 
+    <!-- Title -->
     <TextView
+            android:layout_marginTop="30dp"
             android:id="@+id/textViewTitle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="How It Works"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Description -->
     <TextView
             android:id="@+id/textViewDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Scan the QR code on your table or browse the menu directly."
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp"
+            android:text="Follow these simple steps to order your food seamlessly."
+            android:textColor="@color/darkGreen"
+            android:textStyle="italic"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/textViewTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
-<!--TODO REplace with appr img-->
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Illustration -->
     <ImageView
             android:id="@+id/imageViewIllustration"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="32dp"
-            android:src="@drawable/welcome_image"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/qr_code"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toBottomOf="@id/textViewDescription"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-            android:id="@+id/buttonScanQrCode"
+    <!-- Features List -->
+    <LinearLayout
+            android:id="@+id/featuresList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:backgroundTint="@color/primaryGreen"
-            android:text="Scan QR Code"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/imageViewIllustration"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageViewIllustration" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <Button
-            android:id="@+id/buttonBrowseMenu"
+        <!-- Feature Items -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✅ Scan QR code at your table"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✅ Browse the digital menu"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✅ Place your order online"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✅ Pay directly from the app"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✅ Track your order in real-time"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✅ Get notified when food is ready"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <!-- Navigation Buttons -->
+    <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/primaryGreen"
-            android:text="Browse Menu"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/featuresList"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonScanQrCode" />
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+                android:id="@+id/buttonPrev"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
+                android:text="Previous"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:paddingVertical="10dp"/>
+
+        <View
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:id="@+id/buttonNext"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
+                android:text="Next"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:paddingVertical="10dp"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
